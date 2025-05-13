@@ -1,12 +1,18 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "@/global.css"; // Abaikan ini jika tidak pakai Tailwind CSS + Expo Router
+import { StyleSheet, View } from "react-native";
+import { GluestackUIProvider, Text } from '@gluestack-ui/themed'; // ✅ Import dari package, bukan lokal
+import config from './gluestack-ui.config'; // ✅ pastikan file ini ada di root proyek
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello Worlld</Text>
-      <StatusBar style="auto" />
-    </View>
+    <GluestackUIProvider config={config}>
+        <Text>
+          Hello from Gluestack UI!
+        </Text>
+        <StatusBar style="auto" />
+    </GluestackUIProvider>
   );
 }
 
