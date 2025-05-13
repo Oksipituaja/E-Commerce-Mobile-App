@@ -1,4 +1,4 @@
-import { Text, Card, Button, ButtonText, VStack, Image, Heading, Box} from '@gluestack-ui/themed';
+import { useBreakpointValue, Text, Card, Button, ButtonText, VStack, Image, Heading, Box} from '@gluestack-ui/themed';
 
 type ProductListItemProps = {
   // dibagian id: string nya itu diubah menjadi id: number. kenapa ?
@@ -9,42 +9,77 @@ type ProductListItemProps = {
 
   // sederhananya itu gini , si id itu isinya itu number ,tapi di komponen ini kamu mengtipekan isi id nya sebagai string.
   
-  product: {  id: number; name: string; price: number };  // Adjust the type according to your product structure
+  product: {  id: number; name: string; price: number; description: string; image:string; };  // Adjust the type according to your product structure
 };  
 
 export default function ProductListItem ({ product }: ProductListItemProps) {
-  return <Card className="p-5 rounded-lg max-w-[360px] m-3">
+  
+    const flexDirection = useBreakpointValue({
+    base: 'column',
+    sm: 'row',
+  });
+
+  const button1MarginRight = useBreakpointValue({
+    base: 0,
+    sm: 12, // gunakan angka, bukan string "$3", untuk kompatibilitas
+  });
+
+  const button1MarginBottom = useBreakpointValue({
+    base: 12,
+    sm: 0,
+  });
+
+  const buttonFlex = useBreakpointValue({
+    base: undefined,
+    sm: 1,
+  });
+
+return (
+    <Card flex={1} p="$5" borderRadius="$lg" maxWidth={360} m="$3">
       <Image
         source={{
-          uri: "https://gluestack.github.io/public-blog-video-assets/saree.png",
+          uri: product.image,
         }}
-        className="mb-6 h-[240px] w-full rounded-md aspect-[4/3]"
-        alt="image"
+        alt={`${product.name} image`}
+        resizeMode="contain" // tampil penuh di area
+        h={240}
+        w="100%"
+        borderRadius={12}
+        mb="$6"
       />
-      <Text className="text-sm font-normal mb-2 text-typography-700">
-        Fashion Clothing
+      <Text fontSize="$sm" fontWeight="$normal" mb="$2" color="$text700">
+        {product.name}
       </Text>
-      <VStack className="mb-6">
-        <Heading size="md" className="mb-4">
-          Cotton Kurta
+      <VStack mb="$6" space="sm">
+        <Heading size="md" mb="$4">
+          ${product.price}
         </Heading>
-        <Text size="sm">
-          Floral embroidered notch neck thread work cotton kurta in white and
-          black.
+        <Text fontSize="$sm">
+          {product.description}
         </Text>
       </VStack>
-      <Box className="flex-col sm:flex-row">
-        <Button className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
+      <Box flexDirection={flexDirection}>
+        <Button
+          px="$4"
+          py="$2"
+          mb={button1MarginBottom}
+          mr={button1MarginRight}
+          flex={buttonFlex}
+        >
           <ButtonText size="sm">Add to cart</ButtonText>
         </Button>
         <Button
           variant="outline"
-          className="px-4 py-2 border-outline-300 sm:flex-1"
+          px="$4"
+          py="$2"
+          borderColor="$border300"
+          flex={buttonFlex}
         >
-          <ButtonText size="sm" className="text-typography-600">
+          <ButtonText size="sm" color="$text600">
             Wishlist
           </ButtonText>
         </Button>
       </Box>
-    </Card>;
+    </Card>
+  );
 }
