@@ -9,7 +9,7 @@ export default function App() {
   return (
     <GluestackUIProvider config={config}>
         <Text>
-          Hello from Gluestack UI!
+          Hello World
         </Text>
         <StatusBar style="auto" />
     </GluestackUIProvider>
