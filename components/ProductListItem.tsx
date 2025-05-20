@@ -1,6 +1,7 @@
-import { Text, Card, Button, ButtonText, HStack, VStack, Image, Heading, useBreakpointValue } from '@gluestack-ui/themed';
+import { Text, Card, HStack, VStack, Image, Heading } from '@gluestack-ui/themed';
 import { Link } from 'expo-router';
-import { Pressable } from 'react-native';
+import { use } from 'react';
+import { Pressable, useWindowDimensions } from 'react-native';
 
 type ProductListItemProps = {
   product: { id: number; name: string; price: number; description: string; image: string;
@@ -16,37 +17,43 @@ type ProductListItemProps = {
   };
 };
 
+
 export default function ProductListItem({ product }: ProductListItemProps) {
-  const flexDirection = useBreakpointValue({
-    base: 'column',
-    sm: 'row',
-  });
-
-  const buttonFlex = useBreakpointValue({
-    base: undefined,
-    sm: 1,
-  });
-
+  console.log('Rerender product item');
   return (
     <Link href={`/product/${product.id}`} asChild>
       <Pressable style={{ flex: 1 }}>
-        <Card p="$4" borderRadius="$lg" maxWidth={360} m="$3">
+        <Card
+          p="$4"
+          borderRadius="$lg"
+          flex={1}
+          width={'$full'}
+          m="$1"
+          alignSelf="center"
+          boxShadow="$2"     
+        >
           <Image
             source={{ uri: product.image }}
             alt={`${product.name} image`}
             resizeMode="contain"
             w="100%"
-            h={200} // tinggi tetap
+            h={200}
             borderRadius={12}
             mb="$4"
             backgroundColor="$white"
           />
-          <Text fontSize="$sm" fontWeight="$normal" mb="$2" color="$text700">
+          <Text
+            fontSize="$sm"
+            fontWeight="$normal"
+            mb="$2"
+            color="$text700"
+            numberOfLines={2}
+          >
             {product.name}
           </Text>
-            <Heading size="md" mb="$1">
-              ${product.price}
-            </Heading>
+          <Heading size="md" mb="$1">
+            ${product.price}
+          </Heading>
         </Card>
       </Pressable>
     </Link>

@@ -1,4 +1,5 @@
-import { Text, Card, Button, ButtonText, HStack, VStack, Image, Heading, useBreakpointValue, } from '@gluestack-ui/themed';
+import { Text, Card, Button, ButtonText, HStack, VStack, Image, Heading, useBreakpointValue, Box, } from '@gluestack-ui/themed';
+import { Stack } from "expo-router";
 import { useLocalSearchParams } from 'expo-router';
 import products from '../../assets/products.json';
 
@@ -22,15 +23,17 @@ export default function ProductDetailsScreen() {
     }
 
     return (
-        <Card p="$4" borderRadius="$lg" maxWidth={560} m="$3">
+    <Box flex={1} alignItems='center' p={3}>
+        <Stack.Screen options={{ title: product.name }} />
+        
+        <Card p="$5" borderRadius="$lg" w={'$full'} maxWidth={960} flex={1}>
             <Image
                 source={{ uri: product.image }}
                 alt={`${product.name} image`}
                 resizeMode="contain"
                 w="$full"
-                h={200} 
+                h={240} 
                 borderRadius={12}
-                backgroundColor='$backgroundLight0'
                 mb="$4"
 
             />
@@ -76,7 +79,7 @@ export default function ProductDetailsScreen() {
                 </VStack>
             )}
         </Card>
-
+    </Box>
     );
 
 }
